@@ -1,1 +1,104 @@
+PROBLEM 1:
+Query the Western Longitude (LONG_W) for the largest Northern Latitude (LAT_N) in STATION that is less than 137.2345.
+Round your answer to 4 decimal places.
+
+SOLUTION:
+SELECT ROUND(LONG_W,4) FROM STATION
+WHERE LAT_N =(SELECT MAX(LAT_N) FROM STATION WHERE LAT_N<137.2345);
+
+PROBLEM 2:
+Query the smallest Northern Latitude (LAT_N) from STATION that is greater than 38.7780. Round your answer to  4 decimal places.
+
+SOLUTION :
+SELECT ROUND(MIN(LAT_N),4) FROM STATION
+WHERE LAT_N>38.7780;
+
+
+PROBLEM 3:
+Query the Western Longitude (LONG_W)where the smallest Northern Latitude (LAT_N) in STATION is greater than  38.7780. 
+Round your answer to 4 decimal places.
+
+SOLUTION :
+SELECT ROUND(LONG_W,4) FROM STATION
+WHERE LAT_N = (SELECT MIN(LAT_N) FROM STATION WHERE LAT_N >38.7780);
+
+PROBLEM 4:
+
+Consider P1(a,b) and P2(c,d) to be two points on a 2D plane.
+
+ a happens to equal the minimum value in Northern Latitude (LAT_N in STATION).
+ b happens to equal the minimum value in Western Longitude (LONG_W in STATION).
+ c happens to equal the maximum value in Northern Latitude (LAT_N in STATION).
+ d happens to equal the maximum value in Western Longitude (LONG_W in STATION).
+Query the Manhattan Distance between points P1  and P2 and round it to a scale of 4 decimal places.
+
+SOLUTION:
+SELECT ROUND(ABS(MIN(LAT_N) - MAX(LAT_N)) + ABS(MIN(LONG_W) - MAX(LONG_W)),4)
+FROM STATION;
+
+PROBLEM 5:
+Query a count of the number of cities in CITY having a Population larger than 100,000.
+
+SOLUTION:
+SELECT COUNT(NAME) FROM CITY
+WHERE POPULATION>100000;
+
+PROBLEM 6:
+Query the total population of all cities in CITY where District is California.
+
+SOLUTION:
+SELECT SUM(POPULATION) FROM CITY
+WHERE DISTRICT='California';
+
+PROBLEM 7:
+Query the average population of all cities in CITY where District is California.
+
+SOLUTION:
+SELECT AVG(POPULATION) FROM CITY
+WHERE DISTRICT='California';
+
+PROBLEM 8:
+Query the average population for all cities in CITY, rounded down to the nearest integer.
+
+SOLUTION:
+SELECT ROUND(AVG(POPULATION)) FROM CITY;
+
+PROBLEM 9:
+Query the sum of the populations for all Japanese cities in CITY. The COUNTRYCODE for Japan is JPN.
+
+SOLUTION:
+SELECT SUM(POPULATION)FROM CITY
+WHERE COUNTRYCODE='JPN';
+
+PROBLEM 10:
+Query the difference between the maximum and minimum populations in CITY.
+
+SOLUTION:
+SELECT MAX(POPULATION)-MIN(POPULATION) FROM CITY;
+
+PROBLEM 11:
+Samantha was tasked with calculating the average monthly salaries for all employees in the EMPLOYEES table, but did not realize her keyboard's  0 key was broken until after completing the calculation. 
+She wants your help finding the difference between her miscalculation (using salaries with any zeros removed), and the actual average salary.
+Write a query calculating the amount of error (i.e.: actual-miscalculated average monthly salaries), and round it up to the next integer.
+
+SOLUTION:
+SELECT CEIL(AVG(Salary)-AVG(REPLACE(Salary,'0','')))
+FROM  EMPLOYEES;
+
+CEIL() : The CEIL() function returns the smallest integer value that is bigger than or equal to a number.
+
+Note: This function is equal to the CEILING() function.
+
+REPLACE(): The REPLACE() function replaces all occurrences of a substring within a string, with a new substring.
+
+Note: This function performs a case-sensitive replacement.
+
+Syntax
+REPLACE(string, from_string, new_string)
+
+
+
+
+
+
 
