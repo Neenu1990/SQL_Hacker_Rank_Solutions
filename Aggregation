@@ -96,6 +96,62 @@ Note: This function performs a case-sensitive replacement.
 Syntax
 REPLACE(string, from_string, new_string)
 
+PROBLEM 12:
+We define an employee's total earnings to be their monthly salary*months worked, and the maximum total earnings to be the maximum total earnings for any employee in the Employee table. Write a query to find the maximum total earnings for all employees as well as the total number of employees who have maximum total earnings. 
+Then print these values as 2 space-separated integers.
+
+SOLUTION:
+SELECT (months*salary) as Total_earnings,COUNT(*) FROM Employee
+GROUP BY Total_earnings
+ORDER BY Total_earnings DESC LIMIT 1;
+
+PROBLEM 13:
+Query the following two values from the STATION table:
+
+The sum of all values in LAT_N rounded to a scale of 2 decimal places.
+The sum of all values in LONG_W rounded to a scale of 2 decimal places.
+
+SOLUTION:
+SELECT ROUND(SUM(LAT_N),2),ROUND(SUM(LONG_W),2) FROM STATION;
+
+PROBLEM 14:
+Query the sum of Northern Latitudes (LAT_N) from STATION having values greater than 38.7880 and less than 137.2345. 
+Truncate your answer to 4 decimal places.
+
+SOLUTION:
+SELECT ROUND(SUM(LAT_N),4) FROM STATION
+WHERE LAT_N BETWEEN 38.7880 AND 137.2345;
+
+PROBLEM 15:
+Query the greatest value of the Northern Latitudes (LAT_N) from STATION that is less than 137.2345. Truncate your answer to 4 decimal places.
+
+SOLUTION:
+SELECT ROUND(LAT_N,4) FROM STATION
+WHERE LAT_N<137.2345
+ORDER BY LAT_N DESC LIMIT 1;
+
+
+PROBLEM 16:
+Consider P1(a,c) and P2(b,d) to be two points on a 2D plane where (a,b) are the respective minimum and maximum values of Northern Latitude (LAT_N) and (c,d) are the respective minimum and maximum values of Western Longitude (LONG_W) in STATION.
+Query the Euclidean Distance between points P1 and P2 and format your answer to display 4  decimal digits.
+
+SOLUTION:
+SELECT ROUND(SQRT(POWER(MAX(LAT_N)-MIN(LAT_N),2)+POWER(MAX(LONG_W)-MIN(LONG_W),2)),4)
+FROM STATION;
+
+PROBLEM 17:
+A median is defined as a number separating the higher half of a data set from the lower half. Query the median of the Northern Latitudes (LAT_N) from STATION and round your answer to 4 decimal places.
+
+SOLUTION:
+
+SET @rowIndex := -1;
+SELECT ROUND(AVG(t.LAT_N),4) FROM
+(SELECT @rowIndex:= @rowIndex+1 AS rowIndex, s.LAT_N from STATION AS s ORDER BY s.LAT_N) AS t
+where t.rowIndex in (floor(@rowIndex/2), ceil(@rowIndex/2));
+
+EXPLANATION:
+Firstly, set a variable rowIndex := -1, because the index starts at 0. Then the median’s index would be in floor(rowIndex/2) and ceil(rowIndex/2).
+
 
 
 
