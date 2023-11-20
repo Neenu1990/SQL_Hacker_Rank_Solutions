@@ -12,7 +12,7 @@ PROBLEM 2:
 Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
 Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
 
-SOLUTION:
+SOLUTION: 
 SELECT CITY.NAME
 FROM CITY JOIN COUNTRY ON CITY.COUNTRYCODE=COUNTRY.CODE
 WHERE COUNTRY.CONTINENT='Africa';
@@ -57,6 +57,32 @@ Order your output in descending order by the total number of challenges in which
 If more than one hacker received full scores in same number of challenges, then sort them by ascending hacker_id.
 
 SOLUTION:
+
+SELECT H.hacker_id, 
+       H.name 
+FROM   submissions S 
+       JOIN challenges C 
+         ON S.challenge_id = C.challenge_id 
+       JOIN difficulty D 
+         ON C.difficulty_level = D.difficulty_level 
+       JOIN hackers H 
+         ON S.hacker_id = H.hacker_id 
+            AND S.score = D.score 
+GROUP  BY H.hacker_id, 
+          H.name 
+HAVING Count(S.hacker_id) > 1 
+ORDER  BY Count(S.hacker_id) DESC, 
+          S.hacker_id ASC; 
+
+
+PROBLEM 6 : Ollivander's Inventory
+Harry Potter and his friends are at Ollivander's with Ron, finally replacing Charlie's old broken wand.
+Hermione decides the best way to choose is by determining the minimum number of gold galleons needed to buy each non-evil wand of high power and age. 
+Write a query to print the id, age, coins_needed, and power of the wands that Ron's interested in, sorted in order of descending power. 
+If more than one wand has same power, sort the result in order of descending age.
+
+SOLUTION:
+
 
 
 
